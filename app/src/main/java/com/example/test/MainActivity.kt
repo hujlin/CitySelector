@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         adapter.setData(data)
         setSlideBarData(data)
         adapter.onItemClickListener = { pos, data ->
-            Log.e("result", "$pos===$data")
+            Toast.makeText(this, "$pos===${data.cityName}", Toast.LENGTH_SHORT).show()
         }
         recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayout.VERTICAL))
         recyclerView.addItemDecoration(CityItemDecoration(this))
@@ -44,10 +45,10 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val content = input.text.trim().toString()
                 val data = if (content.isEmpty()) {
-                    ivClear.visibility=View.GONE
+                    ivClear.visibility = View.GONE
                     testData()
                 } else {
-                    ivClear.visibility=View.VISIBLE
+                    ivClear.visibility = View.VISIBLE
                     testData().filter { it.cityName.startsWith(content) || it.character.startsWith(content.toUpperCase()) }
                 }
                 Log.e("data", data.toString())
